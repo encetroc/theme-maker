@@ -1,0 +1,5 @@
+.style-picker-container + .style-picker-container {
+  border-top: 1px solid gray;
+  padding-top: 10px;
+  margin-top: 10px;
+}

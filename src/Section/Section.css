@@ -1,0 +1,10 @@
+.section-container {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 10px;
+}
+
+.section-title {
+  margin: 0;
+  padding-bottom: 10px;
+}
