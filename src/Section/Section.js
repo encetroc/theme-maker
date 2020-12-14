@@ -13,6 +13,7 @@ const Section = ({ section, themeState, themeDispatch }) => {
           key={el[0]}
           description={el[1].description}
           styleValue={el[1].value}
+          regex={el[1].regex}
           sectionName={section[0]}
           styleName={el[0]}
           themeState={themeState}

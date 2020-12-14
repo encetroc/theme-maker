@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import './StylePicker.css';
 
-const color = /^#(?:[0-9a-f]{3}){1,2}$/i
-const size = /^([+-]?(?:\d+|\d*\.\d+))(px|em|%)$/
-const calc = /^(calc\()([+-]?(?:\d+|\d*\.\d+))(px|em|%)(\*|\+|\-|\/)([+-]?(?:\d+|\d*\.\d+))(px|em|%)(\))$/
-const normalBorder = /^([+-]?(?:\d+|\d*\.\d+))(px|em|%)(\s+)(solid|dashed)(\s+)#(?:[0-9a-f]{3}){1,2}$/
-const calcBorder = /^(([+-]?(?:\d+|\d*\.\d+))(px|em|%)|(calc\()([+-]?(?:\d+|\d*\.\d+))(px|em|%)(\*|\+|\-|\/)([+-]?(?:\d+|\d*\.\d+))(px|em|%)(\)))(\s+)(solid|dashed)(\s+)#(?:[0-9a-f]{3}){1,2}$/
-
-const StylePicker = ({ description, styleValue, sectionName, styleName, themeState, themeDispatch }) => {
+const StylePicker = ({ description, styleValue, regex, sectionName, styleName, themeState, themeDispatch }) => {
   const [style, setStyle] = useState(styleValue)
   const [resolvedStyle, setResolvedStyle] = useState('')
-  const [errors, setErrors] = useState('')
+  const [error, setError] = useState('')
+  const [validationRegex, setValidationRegex] = useState(new RegExp(regex))
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!resolveStyle(style).match(calcBorder)) {
-      setErrors('invalid input')
-    } else {
-      setErrors('')
+    if (isValid()) {
       themeDispatch(
         {
           type: 'UPDATE_THEME',
@@ -25,13 +17,24 @@ const StylePicker = ({ description, styleValue, sectionName, styleName, themeSta
       )
     }
   }
+  const isValid = () => {
+    setError('')
+    setStyle(currentValue => currentValue.trim())
+    if (resolveStyle(style).includes('undefined')) {
+      setError('one or more variables do no exist')
+      return false
+    } else if (!resolveStyle(style).match(validationRegex)) {
+      setError(`invalid input for ${sectionName} ${styleName}`)
+      return false
+    }
+    return true
+  }
   const resolveStyle = (styleVar) => {
     if (!styleVar.match(/\{(.*?)\}/g)) {
       return styleVar
     }
     const newResolvedStyle = styleVar.replace(/\{(.*?)\}/g, (match) => {
       const propsArray = match.replace('{', '').replace('}', '').split('.')
-      console.log(propsArray)
       return themeState[propsArray[0]]
         && themeState[propsArray[0]][propsArray[1]]
         && themeState[propsArray[0]][propsArray[1]].value
@@ -41,8 +44,11 @@ const StylePicker = ({ description, styleValue, sectionName, styleName, themeSta
   useEffect(() => {
     setResolvedStyle(resolveStyle(style))
   }, [themeState])
+  useEffect(() => {
+    setTimeout(isValid, 500)
+  }, [style])
   return (
-    <div className="style-picker-container">
+    <div style={{ border: `calc(1px*1px) solid gray` }} className="style-picker-container">
       <span>{description}: </span>
       <strong>{resolvedStyle}</strong>
       <i>{sectionName}.{styleName}</i>
@@ -57,7 +63,7 @@ const StylePicker = ({ description, styleValue, sectionName, styleName, themeSta
           value={style}
           onChange={(e) => setStyle(e.target.value)}
         />
-        {errors}
+        <p>{error}</p>
         <button type='submit'>OK</button>
       </form>
     </div>
