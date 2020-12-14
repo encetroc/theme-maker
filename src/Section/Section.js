@@ -4,11 +4,11 @@ import './Section.css';
 
 const Section = ({ section, themeState, themeDispatch }) => {
   return (
-    <section className="section-container">
-      <h3 className="section-title">
-        {section[0]}
+    <section data-testid='section' className="section-container">
+      <h3 data-testid='section-title' className="section-title">
+        {section && section[0]}
       </h3>
-      {Object.entries(section[1]).map((el) => {
+      {section && Object.entries(section && section[1]).map((el) => {
         return <StylePicker
           key={el[0]}
           description={el[1].description}

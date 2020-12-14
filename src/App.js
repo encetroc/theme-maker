@@ -59,7 +59,7 @@ function App() {
             themeDispatch={themeDispatch} />
         })}
       </div>
-      <button onClick={saveTheme}>Save</button>
+      <button data-testid='save-btn' onClick={saveTheme}>Save</button>
     </>
   );
 }
