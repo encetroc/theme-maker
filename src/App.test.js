@@ -1,8 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react'
+import { render, fireEvent } from '@testing-library/react'
+import App from './App'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+it('Renders correctly', () => {
+  const { queryByTestId } = render(<App />)
+  expect(queryByTestId('save-btn')).toBeTruthy()
+})
+
+it('Saves theme data to local storage', () => {
+  const { queryByTestId } = render(<App />)
+  const saveButton = queryByTestId('save-btn')
+  fireEvent.click(saveButton, { color: '#112233' })
+  expect(localStorage.getItem('theme')).toBeTruthy()
+})
