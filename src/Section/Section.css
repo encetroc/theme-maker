@@ -8,3 +8,21 @@
   margin: 0;
   padding-bottom: 10px;
 }
+
+.section-title::before {
+  content: "\25be";
+  float: left;
+  transform: rotate(-90deg) scale(1.5);
+  transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.section-title-open::before {
+  float: left;
+  transform: rotate(180deg) scale(1.5);
+}
+
+.section-body {
+  overflow: hidden;
+  max-height: 0px;
+  transition: max-height 500ms;
+}
