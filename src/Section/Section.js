@@ -11,9 +11,6 @@ const Section = ({ section, themeState, themeDispatch }) => {
       {section && Object.entries(section && section[1]).map((el) => {
         return <StylePicker
           key={el[0]}
-          description={el[1].description}
-          styleValue={el[1].value}
-          regex={el[1].regex}
           sectionName={section[0]}
           styleName={el[0]}
           themeState={themeState}
