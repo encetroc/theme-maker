@@ -28,7 +28,6 @@
 .style-recap-container {
   display: flex;
   margin-bottom: 10px;
-  cursor: pointer;
   transition: 500ms ease;
 }
 
@@ -44,6 +43,7 @@
   display: flex;
   align-items: center;
   flex: 3;
+  cursor: pointer;
 }
 
 .resolved-style {
@@ -61,6 +61,7 @@
 
 .style-var {
   flex: 2;
+  margin-left: 10px;
 }
 
 .style-editor-form {

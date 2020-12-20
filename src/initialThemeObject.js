@@ -208,7 +208,7 @@ const initialThemeObject = {
       styleValueResolved: '#ffffff',
       metadata: {
         description: 'Background',
-        allowVariables: false,
+        allowVariables: true,
         validationRegex: [
           [
             { regex: /^#/, message: "Color can start with #", example: '#123aef' },

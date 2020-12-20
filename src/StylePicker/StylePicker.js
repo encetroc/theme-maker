@@ -107,8 +107,8 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
         isOpen
         && <button onClick={() => setIsOpen(false)} className='close-btn'></button>
       }
-      <section onClick={() => setIsOpen(prev => !prev)} className={'style-recap-container' + (isOpen ? ' open' : '')}>
-        <div className='style-recap'>
+      <section className={'style-recap-container' + (isOpen ? ' open' : '')}>
+        <div onClick={() => setIsOpen(prev => !prev)} className='style-recap'>
           <span>{styleData && styleData.metadata.description}: </span>
           <strong className='resolved-style' data-testid='resolved-style'>
             {resolvedStyle}

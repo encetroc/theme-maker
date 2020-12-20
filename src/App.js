@@ -48,7 +48,7 @@ function App() {
     })
     return loadedTheme
   }
-  return <div>
+  return <div className='app-container'>
     <ThemeEditor themeState={themeState} themeDispatch={themeDispatch} />
     <ThemeOverview themeState={themeState} />
   </div>
