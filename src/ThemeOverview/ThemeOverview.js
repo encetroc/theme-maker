@@ -28,7 +28,7 @@ const ThemeOverview = ({ themeState }) => {
         background: themeState.buttons.background.styleValueResolved
     }
     return (
-        <div className='overview-container'>
+        <div className='overview-container' data-testid='overview'>
             <section style={sectionPrimary} className='overview-primary'>
                 <p>Simple text</p>
                 <h1>Header 1</h1>

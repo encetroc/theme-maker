@@ -22,7 +22,7 @@ const ThemeEditor = ({ themeState, themeDispatch }) => {
     localStorage.setItem('theme', JSON.stringify(savedTheme))
   }
   return (
-    <div className='editor-container'>
+    <div className='editor-container' data-testid='editor'>
       {Object.entries(themeState).map((el) => {
         return <Section
           key={el[0]}
