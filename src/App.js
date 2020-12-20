@@ -2,6 +2,7 @@ import React, { useReducer } from 'react'
 import ThemeEditor from './ThemeEditor/ThemeEditor'
 import initialThemeObject from './initialThemeObject'
 import './App.css';
+import ThemeOverview from './ThemeOverview/ThemeOverview';
 
 const themeReducer = (state, action) => {
   switch (action.type) {
@@ -47,7 +48,11 @@ function App() {
     })
     return loadedTheme
   }
-  return <ThemeEditor themeState={themeState} themeDispatch={themeDispatch} />
+  return <div>
+    <ThemeEditor themeState={themeState} themeDispatch={themeDispatch} />
+    <ThemeOverview themeState={themeState} />
+  </div>
+
 }
 
 export default App;

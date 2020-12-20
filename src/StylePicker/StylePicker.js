@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import './StylePicker.css';
 
 const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
-  const styleData = themeState[sectionName][styleName]
-  const [style, setStyle] = useState(themeState[sectionName][styleName].styleValue)
-  const [resolvedStyle, setResolvedStyle] = useState(themeState[sectionName][styleName].styleValueResolved)
+  const styleData = themeState && themeState[sectionName][styleName]
+  const [style, setStyle] = useState(styleData && styleData.styleValue)
+  const [resolvedStyle, setResolvedStyle] = useState(styleData && styleData.styleValueResolved)
   const [isOpen, setIsOpen] = useState(false)
   const [errors, setErrors] = useState([])
 
@@ -25,7 +25,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
   const resolveStyle = (styleVar) => {
     let containsUndefined = false
     const metadata = []
-    if (!styleData.metadata.allowVariables) {
+    if (styleData && !styleData.metadata.allowVariables) {
       return [styleVar, metadata, containsUndefined]
     }
     if (styleVar && !styleVar.match(/\{(.*?)\}/g)) {
@@ -109,7 +109,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
       }
       <section onClick={() => setIsOpen(prev => !prev)} className={'style-recap-container' + (isOpen ? ' open' : '')}>
         <div className='style-recap'>
-          <span>{styleData.metadata.description}: </span>
+          <span>{styleData && styleData.metadata.description}: </span>
           <strong className='resolved-style' data-testid='resolved-style'>
             {resolvedStyle}
           </strong>
@@ -135,9 +135,9 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
             />
             {
               !!errors.length &&
-              <ul className='form-errors'>
+              <ul className='form-errors' data-testid='form-errors'>
                 Please verify that you respect at least one of the following:
-                  {errors.map(error => <li className='form-error' key={error}>{error}</li>)}
+                  {errors.map(error => <li className='form-error' key={error} data-testid='form-error'>{error}</li>)}
               </ul>
             }
           </div>

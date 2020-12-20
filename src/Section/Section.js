@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import StylePicker from '../StylePicker/StylePicker'
 import './Section.css';
 
@@ -7,7 +7,7 @@ const Section = ({ section, themeState, themeDispatch }) => {
 
   return (
     <section data-testid='section' className='section-container'>
-      <h3 onClick={() => setIsOpen(prev => !prev)} className={'section-title' + (isOpen ? ' open' : '')}>
+      <h3 onClick={() => setIsOpen(prev => !prev)} className={'section-title' + (isOpen ? ' open' : '')} data-testid='section-title'>
         {section && section[0]}
       </h3>
       <section className={'section-body' + (isOpen ? ' open' : '')}>
