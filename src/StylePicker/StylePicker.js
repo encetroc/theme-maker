@@ -7,6 +7,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
   const [resolvedStyle, setResolvedStyle] = useState(styleData && styleData.styleValueResolved)
   const [isOpen, setIsOpen] = useState(false)
   const [errors, setErrors] = useState([])
+  const [inactiveTimer, seInactiveTimer] = useState(null)
 
   const validateRegex = (value, validationArray) => {
     let myValue = value.slice()
@@ -98,6 +99,11 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
   }
 
   useEffect(() => {
+    if (inactiveTimer) seInactiveTimer(prev => clearTimeout(prev))
+    seInactiveTimer(setTimeout(() => validateInput(style), 500))
+  }, [style])
+
+  useEffect(() => {
     setResolvedStyle(resolveStyle(style)[0])
   }, [themeState])
 
@@ -131,7 +137,9 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
               name='style'
               placeholder="Style"
               value={style}
-              onChange={(e) => setStyle(e.target.value)}
+              onChange={(e) => {
+                setStyle(e.target.value)
+              }}
             />
             {
               !!errors.length &&
