@@ -1,5 +1,6 @@
 import Section from './../Section/Section'
 import React from 'react'
+import './ThemeEditor.css'
 
 const ThemeEditor = ({ themeState, themeDispatch }) => {
   const saveTheme = () => {
@@ -21,18 +22,16 @@ const ThemeEditor = ({ themeState, themeDispatch }) => {
     localStorage.setItem('theme', JSON.stringify(savedTheme))
   }
   return (
-    <>
-      <div>
-        {Object.entries(themeState).map((el) => {
-          return <Section
-            key={el[0]}
-            section={el}
-            themeState={themeState}
-            themeDispatch={themeDispatch} />
-        })}
-      </div>
-      <button data-testid='save-btn' onClick={saveTheme}>Save</button>
-    </>
+    <div>
+      {Object.entries(themeState).map((el) => {
+        return <Section
+          key={el[0]}
+          section={el}
+          themeState={themeState}
+          themeDispatch={themeDispatch} />
+      })}
+      <button className='save-btn' data-testid='save-btn' onClick={saveTheme}>Save</button>
+    </div>
   );
 }
 

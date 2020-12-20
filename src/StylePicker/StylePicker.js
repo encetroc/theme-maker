@@ -16,7 +16,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
         pos += myValue.match(validationArray[i].regex).length
         myValue = myValue.replace(validationArray[i].regex, "")
       } else {
-        return [validationArray[i].message, pos]
+        return [validationArray[i].message, pos, validationArray[0].example]
       }
     }
     return ['NO_ERROR', -1]
@@ -78,7 +78,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
       const noError = errorMessages.find(el => el[0] === 'NO_ERROR')
       if (!noError) {
         errorMessages.forEach(el => {
-          setErrors(previousErrors => [...previousErrors, `> ${el[0]} at position ${el[1]}`])
+          setErrors(previousErrors => [...previousErrors, `> ${el[0]} at position ${el[1]}, example: ${el[2]}`])
         })
         return false
       }
@@ -103,13 +103,21 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
 
   return (
     <div data-testid='style-picker' className={'style-editor-container' + (isOpen ? ' open' : '')}>
-      {/* <button onClick={() => setIsOpen(false)} className='close-btn'>X</button> */}
-      <section onClick={() => setIsOpen(prev => !prev)} className='style-recap-container'>
+      {
+        isOpen
+        && <button onClick={() => setIsOpen(false)} className='close-btn'></button>
+      }
+      <section onClick={() => setIsOpen(prev => !prev)} className={'style-recap-container' + (isOpen ? ' open' : '')}>
         <div className='style-recap'>
           <span>{styleData.metadata.description}: </span>
-          <strong data-testid='resolved-style'>
+          <strong className='resolved-style' data-testid='resolved-style'>
             {resolvedStyle}
           </strong>
+          {
+            resolvedStyle
+            && !!resolvedStyle.match(/^#([0-9a-f]{3}){1,2}$/i)
+            && <div className='color-preview' style={{ backgroundColor: resolvedStyle }}></div>
+          }
         </div>
         <i className='style-var'>{sectionName}.{styleName}</i>
       </section>

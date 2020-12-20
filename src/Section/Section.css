@@ -1,7 +1,5 @@
 .section-container {
-  border: 1px solid gray;
-  padding: 10px;
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
 .section-title {
@@ -24,7 +22,7 @@
 }
 
 .section-title.open {
-  padding-bottom: 20px;
+  padding-bottom: 15px;
 }
 
 .section-title.open::before {
@@ -36,6 +34,7 @@
   max-height: 0px;
   opacity: 0;
   transition: 500ms ease;
+  margin-left: 20px;
 }
 
 .section-body.open {
