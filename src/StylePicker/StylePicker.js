@@ -79,7 +79,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
       const noError = errorMessages.find(el => el[0] === 'NO_ERROR')
       if (!noError) {
         errorMessages.forEach(el => {
-          setErrors(previousErrors => [...previousErrors, `> ${el[0]} at position ${el[1]}, example: ${el[2]}`])
+          setErrors(previousErrors => [...previousErrors, `> ${el[0]} at position ${el[1]}, your resolved style ${resolvedStyleData[0]}, valid example: ${el[2]}`])
         })
         return false
       }
