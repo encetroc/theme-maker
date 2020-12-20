@@ -1,0 +1,34 @@
+.overview-container {
+  display: flex;
+  flex: 1;
+  margin: 10px;
+  border: 1px solid gray;
+}
+
+.overview-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding: 10px;
+}
+
+.overview-primary > * {
+  margin: 10px;
+}
+
+.overview-secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding: 10px;
+}
+
+.overview-secondary > * {
+  margin: 10px;
+}
+
+.overview-btn {
+  padding: 10px 20px;
+}

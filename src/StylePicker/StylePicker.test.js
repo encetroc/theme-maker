@@ -4,12 +4,85 @@ import StylePicker from './StylePicker'
 
 const mockTheme = {
   colors: {
-    primary: { value: '#000000' },
-    secondary: { value: '#ffffff' }
+    primary: {
+      styleValue: '#000000',
+      styleValueResolved: '#000000',
+      metadata: {
+        description: 'Primary font color',
+        allowVariables: false,
+        validationRegex: [
+          [
+            { regex: /^#/, message: "Color can start with #", example: '#123aef' },
+            { regex: /^(?:[0-9a-f]{3}){1,2}$/i, message: "Color can be in HEX" }
+          ]
+        ]
+      }
+    },
+    primaryBackground: {
+      styleValue: '#ffffff',
+      styleValueResolved: '#ffffff',
+      metadata: {
+        description: 'Primary background color',
+        allowVariables: false,
+        validationRegex: [
+          [
+            { regex: /^#/, message: "Color can start with #", example: '#123aef' },
+            { regex: /^(?:[0-9a-f]{3}){1,2}$/i, message: "Color can be in HEX" }
+          ]
+        ]
+      }
+    }
   },
   sizes: {
-    borderWidth: { value: '1px' },
-    text: { value: '1.1em' }
+    text: {
+      styleValue: '1.1em',
+      styleValueResolved: '1.1em',
+      metadata: {
+        description: 'Default text size (em)',
+        allowVariables: false,
+        validationRegex: [
+          [
+            { regex: /^(\d*\.\d+|\d+)/, message: "Text size can start with a decimal number", example: '1.1em' },
+            { regex: /^em$/, message: "Text size can end with em unit" }
+          ]
+        ]
+      }
+    },
+    borderWidth: {
+      styleValue: '1px',
+      styleValueResolved: '1px',
+      metadata: {
+        description: 'Default border width (px)',
+        allowVariables: false,
+        validationRegex: [
+          [
+            { regex: /^(\d*\.\d+|\d+)/, message: "Border width size can start with a decimal number", example: '1.1px' },
+            { regex: /^px$/, message: "Border width size can end with px unit" }
+          ]
+        ]
+      }
+    }
+  },
+  textfield: {
+    border: {
+      styleValue: '1px solid #000000',
+      styleValueResolved: '1px solid #000000',
+      metadata: {
+        description: 'Border',
+        allowVariables: true,
+        validationRegex: [
+          [
+            { regex: /^(\d*\.\d+|\d+)/, message: "Border can start with a decimal number", example: '1px solid #000000' },
+            { regex: /^px/, message: "Border size can be in px" },
+            { regex: /^\s+/, message: "Must have a space after px" },
+            { regex: /^(solid|dashed)/, message: "Border style can be solid or dashed" },
+            { regex: /^\s+/, message: "Must have a space after border style" },
+            { regex: /^#/, message: "Border color can start with #" },
+            { regex: /^(?:[0-9a-f]{3}){1,2}$/i, message: "Border color can be in HEX" }
+          ]
+        ]
+      }
+    }
   }
 }
 
@@ -27,8 +100,8 @@ describe('Style input', () => {
     expect(styleInput.value).toBe('#ffffff')
   })
 
-  it('Does have an initial value', () => {
-    const { queryByPlaceholderText } = render(<StylePicker styleValue='#000000' />)
+  it('Does have an initial resolved value', () => {
+    const { queryByPlaceholderText } = render(<StylePicker sectionName='colors' styleName='primary' themeState={mockTheme} />)
     const styleInput = queryByPlaceholderText('Style')
     expect(styleInput.value).toBe('#000000')
   })
@@ -38,15 +111,11 @@ describe('Ok button', () => {
   let themeDispatchMock,
     renderedStylePicker,
     okButton,
-    styleInput,
-    errorMessage
+    styleInput
 
   beforeEach(() => {
     themeDispatchMock = jest.fn()
     renderedStylePicker = render(<StylePicker
-      description='Primary font color'
-      styleValue='#000000'
-      regex={/^#(?:[0-9a-f]{3}){1,2}$/i}
       sectionName='colors'
       styleName='primary'
       themeState={mockTheme}
@@ -54,28 +123,24 @@ describe('Ok button', () => {
     const { queryByTestId, queryByPlaceholderText } = renderedStylePicker
     okButton = queryByTestId('ok-btn')
     styleInput = queryByPlaceholderText('Style')
-    errorMessage = queryByTestId('error-message')
   })
 
   it('Does not trigger themeDispatch if input is empty', () => {
     fireEvent.change(styleInput, { target: { value: '' } })
     fireEvent.click(okButton)
     expect(themeDispatchMock).not.toHaveBeenCalled()
-    expect(errorMessage).toHaveTextContent('a value is required')
   })
 
   it('Does not trigger themeDispatch if input is invalid', () => {
     fireEvent.change(styleInput, { target: { value: '#z1z1z1' } })
     fireEvent.click(okButton)
     expect(themeDispatchMock).not.toHaveBeenCalled()
-    expect(errorMessage).toHaveTextContent('invalid input for colors primary')
   })
 
   it('Does trigger themeDispatch if input is valid', () => {
     fireEvent.change(styleInput, { target: { value: '#111111' } })
     fireEvent.click(okButton)
     expect(themeDispatchMock).toHaveBeenCalled()
-    expect(errorMessage).toHaveTextContent('')
   })
 })
 
@@ -84,15 +149,11 @@ describe('Resolve style', () => {
     renderedStylePicker,
     resolvedStyle,
     okButton,
-    styleInput,
-    errorMessage
+    styleInput
 
   beforeEach(() => {
     themeDispatchMock = jest.fn()
     renderedStylePicker = render(<StylePicker
-      description='Border'
-      styleValue='{sizes.borderWidth} solid {colors.secondary}'
-      regex={/^([+]?(?:\d+|\d*\.\d+))(px|em|rem)(\s+)(solid|dashed)(\s+)#(?:[0-9a-f]{3}){1,2}$/}
       sectionName='textfield'
       styleName='border'
       themeState={mockTheme}
@@ -101,24 +162,21 @@ describe('Resolve style', () => {
     okButton = queryByTestId('ok-btn')
     resolvedStyle = queryByTestId('resolved-style')
     styleInput = queryByPlaceholderText('Style')
-    errorMessage = queryByTestId('error-message')
   })
 
   it('Does have an initial resolved value', () => {
-    expect(resolvedStyle).toHaveTextContent('1px solid #ffffff')
+    expect(resolvedStyle).toHaveTextContent('1px solid #000000')
   })
 
   it('Does not trigger themeDispatch if input style cannot be resolved', () => {
     fireEvent.change(styleInput, { target: { value: '{sizes.borderWidt} solid {colors.secondary}' } })
     fireEvent.click(okButton)
     expect(themeDispatchMock).not.toHaveBeenCalled()
-    expect(errorMessage).toHaveTextContent('one or more variables do no exist')
   })
 
   it('Does trigger themeDispatch if input style can be resolved', () => {
-    fireEvent.change(styleInput, { target: { value: '{sizes.borderWidth} solid {colors.secondary}' } })
+    fireEvent.change(styleInput, { target: { value: '{sizes.borderWidth} solid {colors.primary}' } })
     fireEvent.click(okButton)
     expect(themeDispatchMock).toHaveBeenCalled()
-    expect(errorMessage).toHaveTextContent('')
   })
 })

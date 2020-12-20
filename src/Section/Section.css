@@ -1,10 +1,43 @@
 .section-container {
-  border: 1px solid gray;
-  padding: 10px;
-  margin: 10px;
+  margin-bottom: 10px;
 }
 
 .section-title {
   margin: 0;
-  padding-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+  transition: 500ms ease;
+}
+
+.section-title:hover {
+  background: rgb(238, 236, 236);
+}
+
+.section-title::before {
+  content: "\25be";
+  margin-right: 10px;
+  float: left;
+  transform: rotate(-90deg) scale(1.5);
+  transition: 500ms ease;
+}
+
+.section-title.open {
+  padding-bottom: 15px;
+}
+
+.section-title.open::before {
+  transform: rotate(0deg) scale(1.5);
+}
+
+.section-body {
+  overflow: hidden;
+  max-height: 0px;
+  opacity: 0;
+  transition: 500ms ease;
+  margin-left: 20px;
+}
+
+.section-body.open {
+  max-height: 500px;
+  opacity: 1;
 }
