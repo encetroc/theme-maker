@@ -1,9 +1,15 @@
 .style-editor-container {
   position: relative;
-  margin: 10px;
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 5px;
+  transition: 500ms ease;
+}
+
+.style-editor-container.open {
+  margin: 10px 0;
   padding: 10px;
   background: rgb(238, 236, 236);
-  border-radius: 5px;
 }
 
 .close-btn {
@@ -15,6 +21,12 @@
 .style-recap-container {
   display: flex;
   margin-bottom: 10px;
+  cursor: pointer;
+  transition: 500ms ease;
+}
+
+.style-recap-container:hover {
+  background: rgb(238, 236, 236);
 }
 
 .style-recap {
@@ -23,6 +35,18 @@
 
 .style-var {
   flex: 1;
+}
+
+.style-editor-form {
+  overflow: hidden;
+  max-height: 0px;
+  opacity: 0;
+  transition: 500ms ease;
+}
+
+.style-editor-form.open {
+  max-height: 150px;
+  opacity: 1;
 }
 
 .label-input {
@@ -64,30 +88,4 @@
 
 .form-actions button {
   padding: 5px 20px;
-}
-
-/* editor closed */
-
-.style-editor-container-closed {
-  position: relative;
-  margin: 0 10px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.style-editor-container-closed:hover {
-  cursor: pointer;
-  background: rgb(238, 236, 236);
-}
-
-.style-recap-container-closed {
-  display: flex;
-}
-
-.style-recap-closed {
-  flex: 3;
-}
-
-.style-var-closed {
-  flex: 1;
 }

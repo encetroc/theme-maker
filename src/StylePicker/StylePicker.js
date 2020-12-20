@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './StylePicker.css';
 
 const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
@@ -101,61 +101,45 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
     setResolvedStyle(resolveStyle(style)[0])
   }, [themeState])
 
-  if (isOpen) {
-    return (
-      <div data-testid='style-picker' className='style-editor-container'>
-        <button onClick={() => setIsOpen(false)} className='close-btn'>X</button>
-        <section className='style-recap-container'>
-          <div className='style-recap'>
-            <span>{styleData.metadata.description}: </span>
-            <strong data-testid='resolved-style'>
-              {resolvedStyle}
-            </strong>
-          </div>
-          <i className='style-var'>{sectionName}.{styleName}</i>
-        </section>
-        <form onSubmit={handleSubmit}>
-          <div className='label-input'>
-            <label htmlFor='style'>Value: </label>
-            <div className='input'>
-              <input
-                type='text'
-                id='style'
-                name='style'
-                placeholder="Style"
-                value={style}
-                onChange={(e) => setStyle(e.target.value)}
-              />
-              {
-                !!errors.length &&
-                <ul className='form-errors'>
-                  Please verify that you respect at least one of the following:
+  return (
+    <div data-testid='style-picker' className={'style-editor-container' + (isOpen ? ' open' : '')}>
+      {/* <button onClick={() => setIsOpen(false)} className='close-btn'>X</button> */}
+      <section onClick={() => setIsOpen(prev => !prev)} className='style-recap-container'>
+        <div className='style-recap'>
+          <span>{styleData.metadata.description}: </span>
+          <strong data-testid='resolved-style'>
+            {resolvedStyle}
+          </strong>
+        </div>
+        <i className='style-var'>{sectionName}.{styleName}</i>
+      </section>
+      <form className={'style-editor-form' + (isOpen ? ' open' : '')} onSubmit={handleSubmit}>
+        <div className='label-input'>
+          <label htmlFor='style'>Value: </label>
+          <div className='input'>
+            <input
+              type='text'
+              id='style'
+              name='style'
+              placeholder="Style"
+              value={style}
+              onChange={(e) => setStyle(e.target.value)}
+            />
+            {
+              !!errors.length &&
+              <ul className='form-errors'>
+                Please verify that you respect at least one of the following:
                   {errors.map(error => <li className='form-error' key={error}>{error}</li>)}
-                </ul>
-              }
-            </div>
+              </ul>
+            }
           </div>
-          <div className='form-actions'>
-            <button data-testid="ok-btn" type='submit'>OK</button>
-          </div>
-        </form>
-      </div>
-    )
-  } else {
-    return (
-      <div data-testid='style-picker' onClick={() => setIsOpen(true)} className='style-editor-container-closed'>
-        <section className='style-recap-container-closed'>
-          <div className='style-recap-closed'>
-            <span>{styleData.metadata.description}: </span>
-            <strong data-testid='resolved-style'>
-              {resolvedStyle}
-            </strong>
-          </div>
-          <i className='style-var-closed'>{sectionName}.{styleName}</i>
-        </section>
-      </div>
-    )
-  }
+        </div>
+        <div className='form-actions'>
+          <button data-testid="ok-btn" type='submit'>OK</button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default StylePicker
