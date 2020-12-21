@@ -19,6 +19,7 @@
   background: none;
   border: none;
   color: #219ebc;
+  cursor: pointer;
 }
 
 .close-btn:before {
@@ -44,6 +45,10 @@
   align-items: center;
   flex: 3;
   cursor: pointer;
+}
+
+.style-recap.open {
+  cursor: default;
 }
 
 .resolved-style {

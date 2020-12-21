@@ -4,6 +4,7 @@ const initialThemeObject = {
       styleValue: '#000000',
       styleValueResolved: '#000000',
       metadata: {
+        isEditorOpen: false,
         description: 'Primary font color',
         allowVariables: false,
         validationRegex: [
@@ -18,6 +19,7 @@ const initialThemeObject = {
       styleValue: '#ffffff',
       styleValueResolved: '#ffffff',
       metadata: {
+        isEditorOpen: false,
         description: 'Primary background color',
         allowVariables: false,
         validationRegex: [
@@ -32,6 +34,7 @@ const initialThemeObject = {
       styleValue: '#ffffff',
       styleValueResolved: '#ffffff',
       metadata: {
+        isEditorOpen: false,
         description: 'Secondary font color',
         allowVariables: false,
         validationRegex: [
@@ -46,6 +49,7 @@ const initialThemeObject = {
       styleValue: '#4a86e8',
       styleValueResolved: '#4a86e8',
       metadata: {
+        isEditorOpen: false,
         description: 'Secondary background color',
         allowVariables: false,
         validationRegex: [
@@ -60,6 +64,7 @@ const initialThemeObject = {
       styleValue: '#4a86e8',
       styleValueResolved: '#4a86e8',
       metadata: {
+        isEditorOpen: false,
         description: 'Highlight on primary background',
         allowVariables: false,
         validationRegex: [
@@ -74,6 +79,7 @@ const initialThemeObject = {
       styleValue: '#ffab40',
       styleValueResolved: '#ffab40',
       metadata: {
+        isEditorOpen: false,
         description: 'Highlight on secondary background',
         allowVariables: false,
         validationRegex: [
@@ -90,6 +96,7 @@ const initialThemeObject = {
       styleValue: '1.1em',
       styleValueResolved: '1.1em',
       metadata: {
+        isEditorOpen: false,
         description: 'Default text size (em)',
         allowVariables: false,
         validationRegex: [
@@ -104,6 +111,7 @@ const initialThemeObject = {
       styleValue: '1.4em',
       styleValueResolved: '1.4em',
       metadata: {
+        isEditorOpen: false,
         description: 'Header1 text size (em)',
         allowVariables: false,
         validationRegex: [
@@ -118,6 +126,7 @@ const initialThemeObject = {
       styleValue: '1.2em',
       styleValueResolved: '1.2em',
       metadata: {
+        isEditorOpen: false,
         description: 'Header2 text size (em)',
         allowVariables: false,
         validationRegex: [
@@ -132,6 +141,7 @@ const initialThemeObject = {
       styleValue: '1px',
       styleValueResolved: '1px',
       metadata: {
+        isEditorOpen: false,
         description: 'Default border width (px)',
         allowVariables: false,
         validationRegex: [
@@ -148,6 +158,7 @@ const initialThemeObject = {
       styleValue: '1.1em',
       styleValueResolved: '1.1em',
       metadata: {
+        isEditorOpen: false,
         description: 'Text size (em)',
         allowVariables: true,
         validationRegex: [
@@ -174,6 +185,7 @@ const initialThemeObject = {
       styleValue: '#000000',
       styleValueResolved: '#000000',
       metadata: {
+        isEditorOpen: false,
         description: 'Font color',
         allowVariables: true,
         validationRegex: [
@@ -188,6 +200,7 @@ const initialThemeObject = {
       styleValue: '1px solid #000000',
       styleValueResolved: '1px solid #000000',
       metadata: {
+        isEditorOpen: false,
         description: 'Border',
         allowVariables: true,
         validationRegex: [
@@ -207,6 +220,7 @@ const initialThemeObject = {
       styleValue: '#ffffff',
       styleValueResolved: '#ffffff',
       metadata: {
+        isEditorOpen: false,
         description: 'Background',
         allowVariables: true,
         validationRegex: [
@@ -223,6 +237,7 @@ const initialThemeObject = {
       styleValue: 'calc(1.1rem*1.2)',
       styleValueResolved: 'calc(1.1rem*1.2)',
       metadata: {
+        isEditorOpen: false,
         description: 'Font size',
         allowVariables: true,
         validationRegex: [
@@ -249,6 +264,7 @@ const initialThemeObject = {
       styleValue: '#000000',
       styleValueResolved: '#000000',
       metadata: {
+        isEditorOpen: false,
         description: 'Font color',
         allowVariables: true,
         validationRegex: [
@@ -263,6 +279,7 @@ const initialThemeObject = {
       styleValue: '#4a86e8',
       styleValueResolved: '#4a86e8',
       metadata: {
+        isEditorOpen: false,
         description: 'Background',
         allowVariables: true,
         validationRegex: [
