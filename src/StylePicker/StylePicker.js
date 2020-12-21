@@ -98,6 +98,24 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
     )
   }
 
+  const openEditor = () => {
+    themeDispatch(
+      {
+        type: 'OPEN_EDITOR',
+        payload: { sectionName, styleName }
+      }
+    )
+  }
+
+  const closeEditor = () => {
+    themeDispatch(
+      {
+        type: 'CLOSE_EDITOR',
+        payload: { sectionName, styleName }
+      }
+    )
+  }
+
   useEffect(() => {
     if (inactiveTimer) seInactiveTimer(prev => clearTimeout(prev))
     seInactiveTimer(setTimeout(() => validateInput(style), 500))
@@ -108,13 +126,13 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
   }, [themeState])
 
   return (
-    <div data-testid='style-picker' className={'style-editor-container' + (isOpen ? ' open' : '')}>
+    <div data-testid='style-picker' className={'style-editor-container' + (styleData.metadata.isEditorOpen ? ' open' : '')}>
       {
-        isOpen
-        && <button onClick={() => setIsOpen(false)} className='close-btn'></button>
+        styleData.metadata.isEditorOpen
+        && <button onClick={closeEditor} className='close-btn'></button>
       }
-      <section className={'style-recap-container' + (isOpen ? ' open' : '')}>
-        <div onClick={() => setIsOpen(prev => !prev)} className='style-recap'>
+      <section className={'style-recap-container' + (styleData.metadata.isEditorOpen ? ' open' : '')}>
+        <div onClick={!styleData.metadata.isEditorOpen && openEditor} className={'style-recap' + (styleData.metadata.isEditorOpen ? ' open' : '')}>
           <span>{styleData && styleData.metadata.description}: </span>
           <strong className='resolved-style' data-testid='resolved-style'>
             {resolvedStyle}
@@ -127,7 +145,7 @@ const StylePicker = ({ sectionName, styleName, themeState, themeDispatch }) => {
         </div>
         <i className='style-var'>{sectionName}.{styleName}</i>
       </section>
-      <form className={'style-editor-form' + (isOpen ? ' open' : '')} onSubmit={handleSubmit}>
+      <form className={'style-editor-form' + (styleData.metadata.isEditorOpen ? ' open' : '')} onSubmit={handleSubmit}>
         <div className='label-input'>
           <label htmlFor='style'>Value: </label>
           <div className='input'>

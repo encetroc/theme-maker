@@ -7,7 +7,7 @@ import ThemeOverview from './ThemeOverview/ThemeOverview';
 const themeReducer = (state, action) => {
   switch (action.type) {
     case 'UPDATE_THEME':
-      const sectionName = Object.keys(action.payload)[0]
+      let sectionName = Object.keys(action.payload)[0]
       const styleValue = action.payload[sectionName]
       const styleName = Object.keys(styleValue)[0]
       return {
@@ -20,9 +20,45 @@ const themeReducer = (state, action) => {
           }
         }
       }
+    case 'OPEN_EDITOR':
+      let newState = { ...state }
+      Object.values(newState).forEach(section => {
+        Object.values(section).forEach(style => {
+          style.metadata.isEditorOpen = false
+        })
+      })
+      newState = {
+        ...newState,
+        [action.payload.sectionName]: {
+          ...newState[action.payload.sectionName],
+          [action.payload.styleName]: {
+            ...newState[action.payload.sectionName][action.payload.styleName],
+            metadata: {
+              ...newState[action.payload.sectionName][action.payload.styleName].metadata,
+              isEditorOpen: true
+            }
+          }
+        }
+      }
+      return newState
+    case 'CLOSE_EDITOR':
+      return {
+        ...state,
+        [action.payload.sectionName]: {
+          ...state[action.payload.sectionName],
+          [action.payload.styleName]: {
+            ...state[action.payload.sectionName][action.payload.styleName],
+            metadata: {
+              ...state[action.payload.sectionName][action.payload.styleName].metadata,
+              isEditorOpen: false
+            }
+          }
+        }
+      }
     default:
       return state
   }
+
 }
 
 function App() {

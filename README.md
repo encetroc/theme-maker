@@ -95,3 +95,9 @@ validationRegex: [
 ```
 In this case we have two arrays inside the validation array, and that is because a text size can either be explicite, something like `1.1em`, or using a css `calc()`, something like `calc(1.1em*2)`.  
 We can definitively improve upon this system, for example using a tree instead of an array of arrays, and we can traverse the tree searching for a match using a DFS algorithm and if no full match is found we display an error. for the time being I just loop through all the arrays searching for a match.
+# To go further
+We can add the following features:
+- A notification system, it can notify the user when his changes are valid at the level of `StylePicker`, and it can also be used to confirm the the theme has been saved to local storage
+- More sections or more styles to existing sections, this should be quite easy as we just need to provide more objects inside `initialThemeObject.js`, if you do so don't forget to clear local storage as it is gonna prevent the new sections/styles from showing
+- More actions for the in place editor, like clear to delete every thing inside the input or reset to return to initial value
+- Same as before, we can add a reset button next to save button that is gonna make the theme go to the initial value
